@@ -4,7 +4,7 @@ int wizToolkit_Add_Button(WIZTOOLKIT_INOUT wizToolkitHandler *handler, WIZTOOLKI
 				WIZTOOLKIT_IN char *label, WIZTOOLKIT_IN void * onClickCallback)
 {
 	#ifdef _DEBUG
-		printf("wizToolkit_Add_Button(%p, %p, %i, %i, %i, %i)\n", handler, containerId, x, y, h, w);
+		printf("wizToolkit_Add_Button(%p, %p, %i, %i, %i, %i, '%s', %p)\n", handler, containerId, x, y, h, w, label, onClickCallback);
 	#endif
 
 	wizToolkitObjectButton * newButton = malloc(sizeof(wizToolkitObjectButton));
@@ -101,6 +101,7 @@ int wizToolkit_Remove_Button(WIZTOOLKIT_INOUT wizToolkitHandler *handler, WIZTOO
 	{
 		free(theButton->label);
 	}
+	//@todo destroy SDL_Surface
 	free(theButton);
 	handler->containers[containerId].object = NULL;
 	return WIZTOOLKIT_OK;

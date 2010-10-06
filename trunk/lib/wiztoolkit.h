@@ -19,6 +19,8 @@
 #define WIZTOOLKIT_CONTAINER_FREE	0
 #define WIZTOOLKIT_EMPTY_CONTAINER	1
 #define WIZTOOLKIT_BUTTON_CONTAINER	2
+#define WIZTOOLKIT_IMAGE_CONTAINER	3
+#define WIZTOOLKIT_CHECKBOX_CONTAINER	4
 
 // data structures
 typedef struct wizToolkitObjectContainer_s
@@ -47,16 +49,46 @@ typedef struct wizToolkitObjectButton_s
 	void * onClick;
 } wizToolkitObjectButton;
 
+// image type object
+typedef struct wizToolkitObjectImage_s
+{
+	int x;
+	int y;
+	int h;
+	int w;
+	char * fileName;
+	SDL_Surface * image;
+	void * onClick;
+} wizToolkitObjectImage;
+
+// checkbox type object
+typedef struct wizToolkitObjectCheckbox_s
+{
+	int x;
+	int y;
+	int h;
+	int w;
+	int checked;
+	char * label;
+	SDL_Surface * labelSurfaceCache;
+	void * onClick;
+} wizToolkitObjectCheckbox;
+
 // initialization
 int wizToolkit_Init(WIZTOOLKIT_INOUT wizToolkitHandler **handler);
 void wizToolkit_Cleanup(WIZTOOLKIT_INOUT  wizToolkitHandler **handler);
 
 // object creation
+/// buttons
 int wizToolkit_Add_Button(WIZTOOLKIT_INOUT wizToolkitHandler *handler, WIZTOOLKIT_OUT long * containerId,
 				WIZTOOLKIT_IN int x, WIZTOOLKIT_IN int y, WIZTOOLKIT_IN int h, WIZTOOLKIT_IN int w,
 				WIZTOOLKIT_IN char *label, WIZTOOLKIT_IN void * onClickCallback);
 int wizToolkit_Remove_Button(WIZTOOLKIT_INOUT wizToolkitHandler *handler, WIZTOOLKIT_OUT long containerId);
-
+/// images
+int wizToolkit_Add_Image(WIZTOOLKIT_INOUT wizToolkitHandler *handler, WIZTOOLKIT_OUT long * containerId,
+				WIZTOOLKIT_IN int x, WIZTOOLKIT_IN int y, WIZTOOLKIT_IN int h, WIZTOOLKIT_IN int w,
+				WIZTOOLKIT_IN char * file, WIZTOOLKIT_IN void * onClickCallback);
+int wizToolkit_Remove_Image(WIZTOOLKIT_INOUT wizToolkitHandler *handler, WIZTOOLKIT_OUT long containerId);
 // object draw to SDL
 int wizToolkit_Draw(WIZTOOLKIT_IN wizToolkitHandler *handler, SDL_Surface * surface);
 

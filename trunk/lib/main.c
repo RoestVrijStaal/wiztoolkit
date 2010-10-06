@@ -3,6 +3,8 @@
 #include "debug.c"
 #include "containers.c"
 #include "button.c"
+#include "image.c"
+#include "checkbox.c"
 #include "draw.c"
 #include "events.c"
 
