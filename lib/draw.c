@@ -83,6 +83,9 @@ int wizToolkit_Draw(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL_
 				case WIZTOOLKIT_BUTTON_CONTAINER:
 					wizToolkit_Draw_Button(handler, surface, counter);
 				break;
+				case WIZTOOLKIT_IMAGE_CONTAINER:
+					//@todo wizToolkit_Draw_Image(handler, surface, counter);
+				break;
 				#ifdef _DEBUG
 				default:
 					printf("Unknown object %i %li in handler %p\n", handler->containers[counter].type, counter, handler);

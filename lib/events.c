@@ -52,6 +52,9 @@ int wizToolkit_Event(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL
 				case WIZTOOLKIT_BUTTON_CONTAINER:
 					wizToolkit_Event_Button(handler, event, counter);
 				break;
+				case WIZTOOLKIT_IMAGE_CONTAINER:
+					//@todo wizToolkit_Event_image(handler, event, counter);
+				break;
 				#ifdef _DEBUG
 				default:
 					printf("Unknown object %i %li in handler %p\n", handler->containers[counter].type, counter, handler);
