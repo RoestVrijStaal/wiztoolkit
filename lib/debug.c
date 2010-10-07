@@ -44,6 +44,7 @@ void wizToolkit_dump_handler(WIZTOOLKIT_IN wizToolkitHandler *handler)
 				case WIZTOOLKIT_BUTTON_CONTAINER:
 					printf("WIZTOOLKIT_BUTTON_CONTAINER\n");
 					wizToolkit_dump_Button(handler, counter);
+				break;
 				case WIZTOOLKIT_IMAGE_CONTAINER:
 					printf("WIZTOOLKIT_IMAGE_CONTAINER\n");
 					wizToolkit_dump_Image(handler, counter);

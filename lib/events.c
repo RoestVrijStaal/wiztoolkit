@@ -9,11 +9,44 @@ int wizToolkitInRect(int px, int py, int x, int y, int h, int w)
 	}
 	return WIZTOOLKIT_ERROR;
 }
- 
+
+int wizToolkit_Event_Image(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL_Event event, long containerId)
+{
+	#ifdef _DEBUG2
+		printf("wizToolkit_Event_Image(%p, %p, %li)\n", handler, &event, containerId);
+	#endif
+	wizToolkitObjectImage * theImage = (wizToolkitObjectImage *)handler->containers[containerId].object;
+	switch(event.type)
+	{
+		case SDL_MOUSEMOTION:
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			break;
+		case SDL_MOUSEBUTTONUP:
+			if ( NULL != theImage->onClick )
+			{
+				if ( WIZTOOLKIT_OK == wizToolkitInRect(event.motion.x, event.motion.y, theImage->x, theImage->y,
+											theImage->h, theImage->w))
+				{
+					#ifdef _DEBUG
+						printf("wizToolkit_Event_Image -> calling event onClick %p\n", theImage->onClick);
+					#endif
+					wizToolKit_onClick doClick;
+					doClick = (wizToolKit_onClick)theImage->onClick;
+					doClick(handler, containerId);
+				}
+			}
+			break;
+	}
+	return WIZTOOLKIT_OK;
+}
+
 int wizToolkit_Event_Button(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL_Event event, long containerId)
 {
+	#ifdef _DEBUG2
+		printf("wizToolkit_Event_Button(%p, %p, %li)\n", handler, &event, containerId);
+	#endif
 	wizToolkitObjectButton * theButton = (wizToolkitObjectButton *)handler->containers[containerId].object;
-	// @todo cast type of event and call the callbacks
 	switch(event.type)
 	{
 		case SDL_MOUSEMOTION:
@@ -26,6 +59,9 @@ int wizToolkit_Event_Button(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT
 				if ( WIZTOOLKIT_OK == wizToolkitInRect(event.motion.x, event.motion.y, theButton->x, theButton->y,
 											theButton->h, theButton->w))
 				{
+					#ifdef _DEBUG
+						printf("wizToolkit_Event_Button -> calling event onClick %p\n", theButton->onClick);
+					#endif
 					wizToolKit_onClick doClick;
 					doClick = (wizToolKit_onClick)theButton->onClick;
 					doClick(handler, containerId);
@@ -53,7 +89,7 @@ int wizToolkit_Event(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL
 					wizToolkit_Event_Button(handler, event, counter);
 				break;
 				case WIZTOOLKIT_IMAGE_CONTAINER:
-					//@todo wizToolkit_Event_image(handler, event, counter);
+					wizToolkit_Event_Image(handler, event, counter);
 				break;
 				#ifdef _DEBUG
 				default:
