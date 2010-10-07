@@ -90,7 +90,7 @@ void exitFromDemo(void)
 /*
  * Callback runs on button click
  */
-static void helloWorldButtonPressed(wizToolkitHandler * handler, long objectId)
+static void exitButtonClick(wizToolkitHandler * handler, long objectId)
 {
 	printf("Hello world\n");
 
@@ -126,16 +126,20 @@ int main(int argc, char *argv[])
 	long containerId;
 
 	// handler, id returns here, x, y , h , w, label, callbackOnClick
-	if ( WIZTOOLKIT_OK == wizToolkit_Add_Button(handler, &containerId, 50, 50, 140, 220, "Hello world!", &helloWorldButtonPressed) )
+	if (WIZTOOLKIT_OK != wizToolkit_Add_Image(handler, &containerId, 60, 0, 30, 260,"toolbar.bmp", NULL) )
 	{
-		printf("Container id : %li\n", containerId);
+		SDL_Quit();
+		// cleanup the handler
+		wizToolkit_Cleanup(&handler);
+		exitFromDemo();
 	}
-	if (WIZTOOLKIT_OK == wizToolkit_Add_Image(handler, &containerId, 0, 220, 20, 320,"titlebar.png", &helloWorldButtonPressed) )
+	if (WIZTOOLKIT_OK != wizToolkit_Add_Image(handler, &containerId, 0, 0, 30, 60,"exitbutton.bmp", &exitButtonClick) )
 	{
-		printf("Container id : %li\n", containerId);
+		SDL_Quit();
+		// cleanup the handler
+		wizToolkit_Cleanup(&handler);
+		exitFromDemo();
 	}
-
-
 
 	#ifdef _DEBUG
 	wizToolkit_dump_handler(handler);
