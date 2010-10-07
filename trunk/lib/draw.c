@@ -1,3 +1,45 @@
+int wizToolkit_Draw_Image(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL_Surface * surface, WIZTOOLKIT_IN long containerId)
+{
+	#ifdef _DEBUG2
+		printf("wizToolkit_Draw_Image(%p, %p, %li)\n", handler, surface, containerId);
+	#endif
+	wizToolkitObjectImage * theImage = (wizToolkitObjectImage *)handler->containers[containerId].object;
+	#ifdef _DEBUG2
+		printf("wizToolkit_Draw_Image -> the Image %p\n", theImage);
+	#endif
+	if ( NULL == theImage->image )
+	{
+		if ( NULL != theImage->fileName )
+		{
+			theImage->image = IMG_Load(theImage->fileName);
+
+			#ifdef _DEBUG
+				printf("wizToolkit_Draw_Image -> Image surface %p\n", theImage->image);
+			#endif
+		}
+	}
+	if ( NULL == theImage->image )
+	{
+		#ifdef _DEBUG
+			printf("wizToolkit_Draw_image -> Unable to render correctly image %li of handler %p\n", containerId, handler);
+		#endif
+		return WIZTOOLKIT_ERROR;
+	}
+	#ifdef _DEBUG2
+		printf("wizToolkit_Draw_Image -> surface cache %p\n", theImage->image);
+	#endif
+
+
+	// draw Image
+	SDL_Rect objectRect;
+	objectRect.x = theImage->x + (theImage->w /2) - (theImage->image->w / 2); 
+	objectRect.y = theImage->y + (theImage->h /2) - (theImage->image->h / 2); 
+
+	SDL_BlitSurface(theImage->image, NULL, surface, &objectRect);
+
+	return WIZTOOLKIT_OK;
+}
+
 int wizToolkit_Draw_Button(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL_Surface * surface, WIZTOOLKIT_IN long containerId)
 {
 	#ifdef _DEBUG2
@@ -84,7 +126,7 @@ int wizToolkit_Draw(WIZTOOLKIT_IN wizToolkitHandler *handler, WIZTOOLKIT_IN SDL_
 					wizToolkit_Draw_Button(handler, surface, counter);
 				break;
 				case WIZTOOLKIT_IMAGE_CONTAINER:
-					//@todo wizToolkit_Draw_Image(handler, surface, counter);
+					wizToolkit_Draw_Image(handler, surface, counter);
 				break;
 				#ifdef _DEBUG
 				default:

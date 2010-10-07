@@ -3,6 +3,7 @@
 #include <string.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_image.h>
 
 #define WIZTOOLKIT_IN
 #define WIZTOOLKIT_OUT

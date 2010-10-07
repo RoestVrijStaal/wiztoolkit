@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 	{
 		printf("Container id : %li\n", containerId);
 	}
-	if (WIZTOOLKIT_OK == wizToolkit_Add_Image(handler, &containerId, 0, 0, 10, 10,"HelloWorld.bmp", NULL) )
+	if (WIZTOOLKIT_OK == wizToolkit_Add_Image(handler, &containerId, 0, 220, 20, 320,"titlebar.png", &helloWorldButtonPressed) )
 	{
 		printf("Container id : %li\n", containerId);
 	}
