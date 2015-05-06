@@ -1,0 +1,1 @@
+A C Widgets library for Applications in linux handheld devices
